@@ -9,7 +9,7 @@ It generates a database of image hashes (average hash) in a local file and reduc
 pip install git+https://github.com/yurielie/dupimgsearch
 ```
 
-## Usage (Execute Directory)
+## Usage
 
 ### Search duplicate images
 
@@ -51,6 +51,7 @@ dupimgsearch purge database [database ...]
 
 + `numpy`
 + `cv2`
+  + `opencv-contirb-python`
 + `argparse`
 + `tqdm`
 
