@@ -109,7 +109,7 @@ class HashDB(object):
         
 
     def update_database(self, db_path: str) -> None:
-        for hash, paths in self._hash2path:
+        for hash, paths in self._hash2path.items():
             if len(paths) == 0:
                 del self._hash2path[hash]
         

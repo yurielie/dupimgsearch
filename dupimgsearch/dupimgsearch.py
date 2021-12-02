@@ -14,15 +14,13 @@ def _find(args: argparse.Namespace) -> None:
         print("error: invalid directory path: '%s'" % args.output)
         sys.exit(1)
     
+    initialized_config: bool = False
     if args.db_path == "" and not args.nodatabase:
         if len(args.dir) > 0:
             # initialize db
             db_dir, _ = _utils.split_database_name(args.dir[0])
             args.db_path = os.path.join(db_dir, ".db.json")
-            print("initialize configure file:\n\tconfigure file: %s\n\tdb_path: %s" % (_conf_path, args.db_path))
-            with open(_conf_path, mode='w', encoding='utf-8') as f:
-                conf: dict[str, str] = {"path": args.db_path}
-                json.dump(conf, f, indent=1, separators=(',',':'))
+            initialized_config = True
         else:
             print("error: no databases exist")
             sys.exit(1)
@@ -43,6 +41,12 @@ def _find(args: argparse.Namespace) -> None:
         print("output skipped images file to %s" % (skipped_imgs_file))
         with open(skipped_imgs_file, mode='w') as f:
             json.dump(skip, f, indent=2)
+    
+    if initialized_config:
+        print("initialize configure file:\n\tconfigure file: %s\n\tdb_path: %s" % (_conf_path, args.db_path))
+        with open(_conf_path, mode='w', encoding='utf-8') as f:
+            conf: dict[str, str] = {"path": args.db_path}
+            json.dump(conf, f, indent=1, separators=(',',':'))
     
     if args.autoremove is True and dup_imgs_file != "":
         setattr(args, "file", [dup_imgs_file])
