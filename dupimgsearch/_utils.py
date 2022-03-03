@@ -1,5 +1,5 @@
 import os
-from typing import Literal, Optional, Tuple
+from typing import Literal, Tuple
 import cv2
 import numpy as np
 
@@ -12,8 +12,8 @@ class _UtilVar:
 def compress_hash(hash: np.ndarray) -> str:
     return ",".join(["%x" % n for n in hash[0]])
 
-def generate_hash(img: Optional[np.ndarray]) -> str:
-    if not img is None:
+def generate_hash(img: np.ndarray | None) -> str:
+    if img is not None:
         return compress_hash(_UtilVar.hash_func.compute(img))
     else:
         print("skipped image: %s" % img)
